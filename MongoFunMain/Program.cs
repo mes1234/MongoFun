@@ -1,3 +1,4 @@
+using MongoAccess;
 using Publisher;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHostedService<Worker>();
+builder.Services.AddTransient<IDataAccess, DataAccess>();
 
 var app = builder.Build();
 
