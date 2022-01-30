@@ -20,12 +20,16 @@ namespace Publisher
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            var random = new Random(stoppingToken.GetHashCode());
+
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+
+
                 await _dataAccess.TryInsert<Item>(new Item
                 {
-                    ContentType = ContentType.Default,
+                    ContentType = (ContentType)random.Next(Enum.GetNames(typeof(ContentType)).Length),
                     Data = new byte[100],
                     Name = "dummy",
                     TimeStamp = DateTime.UtcNow,

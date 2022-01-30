@@ -1,3 +1,5 @@
+using DataModel;
+using Microsoft.AspNetCore.Mvc;
 using MongoAccess;
 using Publisher;
 
@@ -11,6 +13,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHostedService<Worker>();
 builder.Services.AddTransient<IDataAccess, DataAccess>();
+builder.Services.Configure<DbConifg>(
+    builder.Configuration.GetSection(DbConifg.Db));
 
 var app = builder.Build();
 
@@ -21,7 +25,34 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapGet("/hello", () => "yello");
+app.MapGet("/get", async (
+   [FromQuery(Name = "start")] DateTime? start,
+   [FromQuery(Name = "stop")] DateTime? stop,
+   [FromQuery(Name = "type")] ContentType? contentType,
+   [FromQuery(Name = "name")] string? name,
+   IDataAccess dataAccess) =>
+{
+    try
+    {
+        var items = await dataAccess.TryGet<Item>(
+          filter: new Item
+          {
+              ContentType = contentType ?? ContentType.Default,
+              Name = name ?? string.Empty
+          },
+           from: start ?? DateTime.MinValue,
+           to: stop ?? DateTime.Now);
+
+        return Results.Ok(items);
+    }
+    catch (Exception)
+    {
+        return Results.NotFound("No data found for give query");
+    }
+
+
+
+});
 
 app.UseHttpsRedirection();
 

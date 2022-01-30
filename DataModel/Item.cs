@@ -1,6 +1,9 @@
-﻿namespace DataModel
+﻿using MongoDB.Bson.Serialization.Attributes;
+
+namespace DataModel
 {
-    public class Item
+    [BsonIgnoreExtraElements]
+    public class Item : ITimeStamped
     {
         public DateTime TimeStamp { get; set; }
         public ContentType ContentType { get; set; }
@@ -10,8 +13,4 @@
 
     }
 
-    public enum ContentType
-    {
-        Default = 0
-    }
 }
