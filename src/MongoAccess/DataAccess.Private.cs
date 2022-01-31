@@ -30,6 +30,7 @@ namespace MongoAccess
             foreach (PropertyInfo propertyInfo in definition.GetType().GetProperties())
             {
                 var property = propertyInfo.GetValue(definition);
+                //if (property != propertyInfo.GetValue(definition).GetType().def
 
 
             }
