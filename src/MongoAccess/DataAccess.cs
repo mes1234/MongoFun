@@ -6,7 +6,7 @@ using MongoDB.Driver;
 
 namespace MongoAccess
 {
-    public class DataAccess : IDataAccess
+    public partial class DataAccess : IDataAccess
     {
         private readonly DbConifg _dbConfig;
         private readonly MongoClient _client;
@@ -28,28 +28,17 @@ namespace MongoAccess
         public async Task<IEnumerable<T>> TryGet<T>(T filter, DateTime from, DateTime to)
             where T : ITimeStamped
         {
-
             try
             {
-                var collection = GettCollection<Item>();
+                var collection = GetCollection<T>();
 
-                var builder = Builders<Item>.Filter;
+                var dateFilter = BuildDateFilter<T>(from, to);
 
-
-                var startFilter = builder.Gt(x => x.TimeStamp, from);
-                var stopFilter = builder.Lte(x => x.TimeStamp, to);
-
-
-
-                var dateFilter = builder.And(new[] { startFilter, stopFilter });
-
-                if (dateFilter == null) throw new Exception("Filter builder failed");
+                var customFilter = BuildFilter<T>(filter);
 
                 var results = await collection.FindAsync<T>(dateFilter);
 
-
-
-                return results.ToList<T>() ?? throw new Exception("Data retrieval failed"); ;
+                return (IEnumerable<T>)results.ToListAsync<T>();
             }
             catch (Exception ex)
             {
@@ -63,7 +52,7 @@ namespace MongoAccess
         {
             try
             {
-                var collection = GettCollection<T>();
+                var collection = GetCollection<T>();
 
                 await collection.InsertOneAsync(item);
                 return true;
@@ -73,13 +62,6 @@ namespace MongoAccess
                 _logger.LogError(ex, "Error during inserting data to DB");
                 return false;
             }
-        }
-
-        private IMongoCollection<T> GettCollection<T>()
-        {
-            var db = _client.GetDatabase(_dbConfig.DbName);
-            var collection = db.GetCollection<T>(_dbConfig.CollectionName);
-            return collection;
         }
     }
 }
