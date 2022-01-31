@@ -1,0 +1,5 @@
+﻿C:\Users\witol\source\repos\mes1234\MongoFun\src\Publisher\Worker.cs
+C:\Users\witol\source\repos\mes1234\MongoFun\src\Publisher\appsettings.Development.json
+C:\Users\witol\source\repos\mes1234\MongoFun\src\Publisher\appsettings.json
+C:\Users\witol\source\repos\mes1234\MongoFun\src\Publisher\Dockerfile
+C:\Users\witol\source\repos\mes1234\MongoFun\src\Publisher\Properties\launchSettings.json

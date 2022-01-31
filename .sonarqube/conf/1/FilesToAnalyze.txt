@@ -1,0 +1,3 @@
+﻿C:\Users\witol\source\repos\mes1234\MongoFun\src\MongoAccess\DataAccess.cs
+C:\Users\witol\source\repos\mes1234\MongoFun\src\MongoAccess\DbConifg.cs
+C:\Users\witol\source\repos\mes1234\MongoFun\src\MongoAccess\IDataAccess.cs
