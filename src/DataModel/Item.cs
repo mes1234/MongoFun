@@ -6,9 +6,9 @@ namespace DataModel
     public class Item : ITimeStamped
     {
         public DateTime TimeStamp { get; set; }
-        public ContentType ContentType { get; set; }
+        public ContentType? ContentType { get; set; }
         public string? Name { get; set; }
-
+        public string? Description { get; set; }
         public byte[]? Data { get; set; }
 
     }

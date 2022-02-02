@@ -21,22 +21,7 @@ namespace MongoAccess
                 : builder.And(new[] { startFilter, stopFilter });
         }
 
-        private static FilterDefinition<T> BuildFilter<T>(T definition)
-        {
-            if (definition == null) throw new ArgumentNullException(nameof(definition));
 
-            var builder = Builders<T>.Filter;
-
-            foreach (PropertyInfo propertyInfo in definition.GetType().GetProperties())
-            {
-                var property = propertyInfo.GetValue(definition);
-                //if (property != propertyInfo.GetValue(definition).GetType().def
-
-
-            }
-
-            return builder.Empty;
-        }
 
         private IMongoCollection<T> GetCollection<T>()
         {

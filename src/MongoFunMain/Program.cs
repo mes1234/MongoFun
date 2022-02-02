@@ -37,8 +37,8 @@ app.MapGet("/get", async (
         var items = await dataAccess.TryGet<Item>(
           filter: new Item
           {
-              ContentType = contentType ?? ContentType.Default,
-              Name = name ?? string.Empty
+              ContentType = contentType,
+              Name = name
           },
            from: start ?? DateTime.MinValue,
            to: stop ?? DateTime.Now);

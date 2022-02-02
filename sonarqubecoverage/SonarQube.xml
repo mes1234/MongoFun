@@ -4,6 +4,7 @@
     <lineToCover lineNumber="8" covered="false" />
     <lineToCover lineNumber="9" covered="true" />
     <lineToCover lineNumber="10" covered="false" />
+    <lineToCover lineNumber="11" covered="false" />
     <lineToCover lineNumber="12" covered="false" />
   </file>
 </coverage>

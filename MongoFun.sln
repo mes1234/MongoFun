@@ -13,6 +13,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Publisher", "src\Publisher\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataModel.Tests", "src\DataModel.Tests\DataModel.Tests.csproj", "{2527CEE8-991C-4CB6-A390-94907D19ED6C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CDC7A976-3BF4-4323-851B-DAD4269C9AFD}"
+	ProjectSection(SolutionItems) = preProject
+		src\MongoAccess.Test\MongoAccess.Test.csproj = src\MongoAccess.Test\MongoAccess.Test.csproj
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoAccess.Tests", "src\MongoAccess.Tests\MongoAccess.Tests.csproj", "{E2032218-94FF-4972-8B41-A06C2D30CFD3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +46,10 @@ Global
 		{2527CEE8-991C-4CB6-A390-94907D19ED6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2527CEE8-991C-4CB6-A390-94907D19ED6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2527CEE8-991C-4CB6-A390-94907D19ED6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2032218-94FF-4972-8B41-A06C2D30CFD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2032218-94FF-4972-8B41-A06C2D30CFD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2032218-94FF-4972-8B41-A06C2D30CFD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2032218-94FF-4972-8B41-A06C2D30CFD3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

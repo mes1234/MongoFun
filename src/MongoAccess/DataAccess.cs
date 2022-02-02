@@ -30,15 +30,19 @@ namespace MongoAccess
         {
             try
             {
+                var filterBuilder = new FilterBuilder<T>();
+
                 var collection = GetCollection<T>();
 
                 var dateFilter = BuildDateFilter<T>(from, to);
 
-                var customFilter = BuildFilter<T>(filter);
+                var customFilter = filterBuilder.BuildFilter(filter);
 
-                var results = await collection.FindAsync<T>(dateFilter);
+                var filters = dateFilter & customFilter;
 
-                return (IEnumerable<T>)results.ToListAsync<T>();
+                var results = await collection.FindAsync<T>(filters);
+
+                return await results.ToListAsync<T>();
             }
             catch (Exception ex)
             {

@@ -31,7 +31,7 @@ namespace Publisher
                 {
                     ContentType = (ContentType)random.Next(Enum.GetNames(typeof(ContentType)).Length),
                     Data = new byte[100],
-                    Name = "dummy",
+                    Name = "Test",
                     TimeStamp = DateTime.UtcNow,
 
                 }).ConfigureAwait(false);
