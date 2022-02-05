@@ -1,7 +1,4 @@
-﻿using DataModel;
-using MongoDB.Driver;
-
-namespace MongoAccess
+﻿namespace DataModel
 {
     public interface IDataAccess
     {

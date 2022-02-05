@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MsSqlAccess\MsSqlAccess.csproj" />
     <ProjectReference Include="..\Publisher\Publisher.csproj" />
   </ItemGroup>
 

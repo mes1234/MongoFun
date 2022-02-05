@@ -6,16 +6,16 @@ using MongoDB.Driver;
 
 namespace MongoAccess
 {
-    public partial class DataAccess : IDataAccess
+    public partial class MongoDataAccess : IDataAccess
     {
         private readonly DbConifg _dbConfig;
         private readonly MongoClient _client;
-        private readonly ILogger<DataAccess> _logger;
+        private readonly ILogger<MongoDataAccess> _logger;
 
-        public DataAccess(
+        public MongoDataAccess(
             IOptions<DbConifg> options,
             IConfiguration configuration,
-            ILogger<DataAccess> logger)
+            ILogger<MongoDataAccess> logger)
         {
             var connectionString = configuration.GetConnectionString("mongo");
 

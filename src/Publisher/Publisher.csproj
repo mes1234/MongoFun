@@ -17,5 +17,6 @@
   <ItemGroup>
     <ProjectReference Include="..\DataModel\DataModel.csproj" />
     <ProjectReference Include="..\MongoAccess\MongoAccess.csproj" />
+    <ProjectReference Include="..\MsSqlAccess\MsSqlAccess.csproj" />
   </ItemGroup>
 </Project>

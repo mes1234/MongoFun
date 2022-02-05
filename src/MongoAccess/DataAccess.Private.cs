@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace MongoAccess
 {
-    public partial class DataAccess
+    public partial class MongoDataAccess
     {
         private static FilterDefinition<T> BuildDateFilter<T>(DateTime from, DateTime to) where T : ITimeStamped
         {

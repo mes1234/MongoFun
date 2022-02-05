@@ -1,25 +1,40 @@
 using DataModel;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MongoAccess;
+using MsSqlAccess;
 
 namespace Publisher
 {
     public class Worker : BackgroundService
     {
-        private readonly IDataAccess _dataAccess;
+        private readonly IEnumerable<IDataAccess> _dataAccesses;
+        private readonly IServiceScopeFactory _scopeFactory;
         private readonly ILogger<Worker> _logger;
 
         public Worker(
-            IDataAccess dataAccess,
+            IEnumerable<IDataAccess> dataAccesses,
+            IServiceScopeFactory scopeFactory,
             ILogger<Worker> logger)
         {
-            _dataAccess = dataAccess ?? throw new ArgumentNullException(nameof(dataAccess));
+            _dataAccesses = dataAccesses ?? throw new ArgumentNullException(nameof(dataAccesses));
+            _scopeFactory = scopeFactory ?? throw new ArgumentNullException(nameof(scopeFactory));
             _logger = logger;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+
+            var names = new List<string>
+            {
+                "one",
+                "two",
+                "three",
+                "four",
+                "five"
+            };
+
             var random = new Random(stoppingToken.GetHashCode());
 
             while (!stoppingToken.IsCancellationRequested)
@@ -27,14 +42,18 @@ namespace Publisher
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
 
 
-                await _dataAccess.TryInsert<Item>(new Item
+                var data = new Item
                 {
                     ContentType = (ContentType)random.Next(Enum.GetNames(typeof(ContentType)).Length),
                     Data = new byte[100],
-                    Name = "Test",
+                    Name = names[random.Next(names.Count)],
+                    Description = names[random.Next(names.Count)],
                     TimeStamp = DateTime.UtcNow,
 
-                }).ConfigureAwait(false);
+                };
+
+                foreach (var dataAccess in _dataAccesses)
+                    await dataAccess.TryInsert<Item>(data).ConfigureAwait(false);
 
                 await Task.Delay(1000, stoppingToken);
             }

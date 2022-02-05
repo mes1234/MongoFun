@@ -1,6 +1,7 @@
 using DataModel;
 using Microsoft.AspNetCore.Mvc;
 using MongoAccess;
+using MsSqlAccess;
 using Publisher;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,9 +13,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHostedService<Worker>();
-builder.Services.AddTransient<IDataAccess, DataAccess>();
+builder.Services.AddTransient<IDataAccess, MongoDataAccess>();
+builder.Services.AddTransient<IDataAccess, SqlDataAccess>();
+builder.Services.InstallMsSqlAccess(builder.Configuration);
 builder.Services.Configure<DbConifg>(
     builder.Configuration.GetSection(DbConifg.Db));
+builder.Services.AddHostedService<BootstrapDb>();
 
 var app = builder.Build();
 
@@ -30,27 +34,33 @@ app.MapGet("/get", async (
    [FromQuery(Name = "stop")] DateTime? stop,
    [FromQuery(Name = "type")] ContentType? contentType,
    [FromQuery(Name = "name")] string? name,
-   IDataAccess dataAccess) =>
+   [FromQuery(Name = "description")] string? description,
+ IEnumerable<IDataAccess> dataAccess) =>
 {
     try
     {
-        var items = await dataAccess.TryGet<Item>(
-          filter: new Item
-          {
-              ContentType = contentType,
-              Name = name
-          },
-           from: start ?? DateTime.MinValue,
-           to: stop ?? DateTime.Now);
+        var filter = new Item
+        {
+            ContentType = contentType,
+            Name = name,
+            Description = description,
+        };
 
-        return Results.Ok(items);
+        var results = new List<IEnumerable<Item>>();
+
+        foreach (var accesor in dataAccess)
+        {
+            results.Add(await accesor.TryGet<Item>(
+                 filter: filter,
+                 from: start ?? DateTime.MinValue,
+                  to: stop ?? DateTime.Now));
+        }
+        return Results.Ok(results);
     }
     catch (Exception)
     {
         return Results.NotFound("No data found for give query");
     }
-
-
 
 });
 
