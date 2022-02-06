@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MongoAccess;
 using MsSqlAccess;
 using Publisher;
+using Stats;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHostedService<Worker>();
 builder.Services.AddTransient<IDataAccess, MongoDataAccess>();
 builder.Services.AddTransient<IDataAccess, SqlDataAccess>();
+builder.Services.Decorate<IDataAccess, TimerDecorator>();
 builder.Services.InstallMsSqlAccess(builder.Configuration);
 builder.Services.Configure<DbConifg>(
     builder.Configuration.GetSection(DbConifg.Db));
