@@ -4,9 +4,10 @@ using MongoAccess;
 using MsSqlAccess;
 using Publisher;
 using Stats;
+using System.Runtime.Caching;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var _cache = MemoryCache.Default;
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -65,6 +66,16 @@ app.MapGet("/get", async (
     }
 
 });
+
+app.MapGet("/stats", () =>
+ {
+     var mongo_insert = (Statistics)_cache.Get($"INSERT_MongoDataAccess");
+     var sql_insert = (Statistics)_cache.Get($"INSERT_SqlDataAccess");
+
+     var mongo_get = (Statistics)_cache.Get($"GET_MongoDataAccess");
+     var sql_get = (Statistics)_cache.Get($"GET_SqlDataAccess");
+     return Results.Ok($"AVG mongo insert {mongo_insert.Average} ms \n AVG sql insert {sql_insert.Average} ms   AVG mongo get {mongo_get.Average} ms \n AVG sql get {sql_get.Average} ms              ");
+ });
 
 app.UseHttpsRedirection();
 
