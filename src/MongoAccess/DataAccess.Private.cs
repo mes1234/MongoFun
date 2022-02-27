@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Reflection;
 
@@ -13,12 +14,10 @@ namespace MongoAccess
         {
             var builder = Builders<T>.Filter;
 
-            var startFilter = builder.Gt(x => x.TimeStamp, from);
-            var stopFilter = builder.Lte(x => x.TimeStamp, to);
+            var startFilter = builder.Gt(x => x.TimeStamp, new BsonDateTime(from));
+            var stopFilter = builder.Lte(x => x.TimeStamp, new BsonDateTime(to));
 
-            return (from == DateTime.MinValue)
-                ? startFilter
-                : builder.And(new[] { startFilter, stopFilter });
+            return builder.And(new[] { startFilter, stopFilter });
         }
 
 

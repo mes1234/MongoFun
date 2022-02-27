@@ -19,12 +19,11 @@ namespace MsSqlAccess
             {
                 case Item itemToRetrieve:
                     {
-
                         using var scope = _scopeFactory.CreateScope();
 
                         var itemContext = scope.ServiceProvider.GetRequiredService<ItemContext>();
 
-                        var query = itemContext.Items.Where(x => (x.TimeStamp > from) & (x.TimeStamp <= to));
+                        var query = itemContext.Items.Where(x => (x.TimeStamp > from) && (x.TimeStamp <= to));
 
                         if (itemToRetrieve.ContentType != null)
                             query = query.Where(x => x.ContentType == itemToRetrieve.ContentType);

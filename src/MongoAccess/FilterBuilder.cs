@@ -11,13 +11,13 @@ namespace MongoAccess
 {
     public class FilterBuilder<T> : IFilterBuilder<T>
     {
-        private readonly FilterDefinitionBuilder<T> builder;
-        private readonly List<FilterDefinition<T>> filters;
+        private readonly FilterDefinitionBuilder<T> _builder;
+        private readonly List<FilterDefinition<T>> _filters;
 
         public FilterBuilder()
         {
-            filters = new();
-            builder = Builders<T>.Filter;
+            _filters = new();
+            _builder = Builders<T>.Filter;
         }
 
         public FilterDefinition<T> BuildFilter(T definition)
@@ -27,7 +27,7 @@ namespace MongoAccess
             foreach (PropertyInfo propertyInfo in definition.GetType().GetProperties())
                 ExtractFilter(definition, propertyInfo);
 
-            return builder.And(filters);
+            return _builder.And(_filters);
         }
 
         private void ExtractFilter(T definition, PropertyInfo propertyInfo)
@@ -38,11 +38,11 @@ namespace MongoAccess
 
             if (property == null) return;
 
-            var filter = builder?.Eq(propertyInfo.Name, property);
+            var filter = _builder?.Eq(propertyInfo.Name, property);
 
             if (filter == null) return;
 
-            filters?.Add(filter);
+            _filters?.Add(filter);
         }
     }
 }

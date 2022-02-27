@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,6 +19,8 @@ namespace DataModel
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
+        [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
         public DateTime TimeStamp { get; set; }
         public ContentType? ContentType { get; set; }
         public string? Name { get; set; }

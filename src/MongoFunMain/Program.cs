@@ -58,7 +58,8 @@ app.MapGet("/get", async (
                  from: start ?? DateTime.MinValue,
                   to: stop ?? DateTime.Now));
         }
-        return Results.Ok(results);
+
+        return Results.Ok($"Mongo count: {results[0].Count()} Sql count: {results[1].Count()}");
     }
     catch (Exception)
     {
