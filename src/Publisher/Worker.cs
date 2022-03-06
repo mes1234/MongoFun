@@ -10,16 +10,13 @@ namespace Publisher
     public class Worker : BackgroundService
     {
         private readonly IEnumerable<IDataAccess> _dataAccesses;
-        private readonly IServiceScopeFactory _scopeFactory;
         private readonly ILogger<Worker> _logger;
 
         public Worker(
             IEnumerable<IDataAccess> dataAccesses,
-            IServiceScopeFactory scopeFactory,
             ILogger<Worker> logger)
         {
             _dataAccesses = dataAccesses ?? throw new ArgumentNullException(nameof(dataAccesses));
-            _scopeFactory = scopeFactory ?? throw new ArgumentNullException(nameof(scopeFactory));
             _logger = logger;
         }
 
@@ -48,7 +45,7 @@ namespace Publisher
                     Data = new byte[100],
                     Name = names[random.Next(names.Count)],
                     Description = names[random.Next(names.Count)],
-                    TimeStamp = DateTime.UtcNow,
+                    TimeStamp = DateTime.Now,
 
                 };
 

@@ -17,6 +17,9 @@ namespace MongoAccess.Tests
             var filterBuilder = new FilterBuilder<Item>();
 
             var filters = filterBuilder.BuildFilter(filterObj);
+
+
+            Assert.NotNull(filters);
         }
     }
 }

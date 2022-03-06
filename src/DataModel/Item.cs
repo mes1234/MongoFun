@@ -20,7 +20,7 @@ namespace DataModel
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
+        [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
         public DateTime TimeStamp { get; set; }
         public ContentType? ContentType { get; set; }
         public string? Name { get; set; }

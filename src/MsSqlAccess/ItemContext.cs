@@ -13,18 +13,16 @@ namespace MsSqlAccess
     {
 #pragma warning disable CS8618
         public ItemContext(DbContextOptions<ItemContext> options) : base(options)
-        { }
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
               .Entity<Item>()
               .Property(e => e.TimeStamp)
-             .HasConversion(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+             .HasConversion(v => DateTime.SpecifyKind(v, DateTimeKind.Utc), v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
         }
-
-
-
 
         public DbSet<Item> Items { get; set; }
 #pragma warning restore
